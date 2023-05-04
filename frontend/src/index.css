@@ -1,0 +1,36 @@
+.logoImage{
+  max-height: 80px;
+}
+/*941C2F*/
+.darkBackground{
+  background-color: #564D4A;
+}
+
+.redBackground{
+  background-color: #BA1B1D;
+}
+
+.companyName{
+  font-size: 38px !important;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.titles{
+  font-size: 34px;
+  font-style: italic;
+  font-weight: bold;
+  color: #BA1B1D;
+}
+
+.lightBackground{
+  background-color: #F7F4F3;
+}
+
+.redButton{
+  background-color: #BA1B1D !important;
+}
+
+.blueButton{
+  background-color: #59BEEA !important;
+}
