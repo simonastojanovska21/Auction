@@ -23,6 +23,13 @@
   color: #BA1B1D;
 }
 
+.subtitles{
+  font-size: 26px;
+  font-style: italic;
+  font-weight: bold;
+  color: #BA1B1D;
+}
+
 .lightBackground{
   background-color: #F7F4F3;
 }

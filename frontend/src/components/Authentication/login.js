@@ -30,6 +30,7 @@ const Login = (props)=>{
 
         setCookies("access_token",response.data.token)
         setCookies("userRole",response.data.userRole)
+        localStorage.setItem("username",response.data.username)
         navigate("/")
     }
     return(

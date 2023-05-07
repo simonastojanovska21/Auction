@@ -16,6 +16,31 @@ const UsersAPICall={
         }).then(response=>{
             console.log(response)
         })
+    },
+
+    getUserDetails:(username)=>{
+        return axios.get(`http://localhost:3001/authentication/userDetails/${username}`)
+    },
+
+    editUserDetails:(username, firstName,lastName,imageUrl, phoneNumber)=>{
+        return axios.post('http://localhost:3001/authentication/editUserDetails',{
+            username:username,
+            firstName:firstName,
+            lastName:lastName,
+            imageUrl:imageUrl,
+            phoneNumber:phoneNumber
+        })
+    },
+
+    getUsernames:()=>{
+        return axios.get('http://localhost:3001/authentication/getUsernames')
+    },
+
+    manageUserRoles:(username, userRole)=>{
+        return axios.post('http://localhost:3001/authentication/updateUserRole',{
+            username:username,
+            userRole:userRole
+        })
     }
 }
 

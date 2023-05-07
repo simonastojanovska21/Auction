@@ -10,7 +10,7 @@ const Header = (props)=>{
 
     const navigate = useNavigate();
 
-    const [cookies,setCookies] = useCookies(["access_token"])
+    const [cookies,setCookies] = useCookies(["access_token","userRole"])
 
     const logoutUser=()=>{
         setCookies("access_token","")

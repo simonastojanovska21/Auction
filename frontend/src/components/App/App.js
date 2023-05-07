@@ -7,12 +7,17 @@ import Login from "../Authentication/login";
 import Register from "../Authentication/register";
 import AccountInfo from "../Profile/accountInfo";
 import AddCategory from "../Category/addCategory";
+import UsersAPICall from "../../apiCalls/UsersAPICall";
 
 class App extends Component{
   constructor(props) {
     super(props);
     this.state={
-        userRoles:['Admin','Buyer','Seller']
+        userRoles:['Admin','Buyer','Seller'],
+        userRoleOptions:[{value:"Admin", label:"Admin"},
+                         {value:"Buyer", label:"Buyer"},
+                         {value:"Seller", label:"Seller"}],
+        userDetails:{}
     }
   }
 
@@ -23,10 +28,10 @@ class App extends Component{
           <main>
             <div>
               <Routes>
-                  <Route path={"/"} element={<Home/>} />
+                  <Route path={"/"} element={<Home />} />
                   <Route path={"/login"} element={<Login />} />
                   <Route path={"/register"} element={<Register />} />
-                  <Route path={"/accountInfo"} element={<AccountInfo />} />
+                  <Route path={"/accountInfo"} element={<AccountInfo userRoleOptions={this.state.userRoleOptions} />} />
                   <Route path={"/category/add"} element={<AddCategory />} />
               </Routes>
             </div>
@@ -40,6 +45,15 @@ class App extends Component{
 
   }
 
+  getAccountInfo=async (username) => {
+      await UsersAPICall.getUserDetails(username)
+          .then((response) => {
+              this.setState({
+                  userDetails: response.data.userDetails
+              })
+          })
+
+  }
 }
 
 export default App;
