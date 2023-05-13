@@ -41,3 +41,15 @@
 .blueButton{
   background-color: #59BEEA !important;
 }
+
+.subcategoriesCards{
+  height: 300px !important;
+}
+
+.subcategoriesCards img{
+  width: 80%;
+  height: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

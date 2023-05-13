@@ -2,17 +2,18 @@ import React, {useEffect, useState} from "react";
 import UsersAPICall from "../../apiCalls/UsersAPICall";
 import profileImage from "../../images/profile.png"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserPen, faUserLock} from "@fortawesome/free-solid-svg-icons";
+import {faUserPen, faUserLock, faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import UserDetails from "./userDetails";
 import {useCookies} from "react-cookie";
 import ManageUserRoles from "./manageUserRoles";
+import {Link} from "react-router-dom";
 
 const AccountInfo=(props)=>{
 
     const [userDetails, setUserDetails] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [editUserDetails, setEditUserDetails] = useState(false)
-    const [cookies, setCookies] = useCookies(["userRole"])
+    const [cookies, ] = useCookies(["userRole"])
     //if the value is true than the component for managing roles should be displayed, if the value is false
     //than information about the users are displayed
     const [displayManageRoles, setDisplayManageRoles] = useState(false)
@@ -23,10 +24,11 @@ const AccountInfo=(props)=>{
             await UsersAPICall.getUserDetails(username)
                 .then((response)=>{
                     setUserDetails(response.data.userDetails)
+                    setIsLoaded(true)
                     // console.log(username)
-                    // console.log(response.data.userDetails)
+                    //console.log(response.data)
                 })
-            setIsLoaded(true)
+
         }catch (e){
             console.log(e)
         }
@@ -60,6 +62,11 @@ const AccountInfo=(props)=>{
                                                 onClick={()=>setDisplayManageRoles(!displayManageRoles)}>
                                             <FontAwesomeIcon icon={faUserLock} /> Manage user roles
                                         </button>
+                                        : <></>}
+                                    {cookies.userRole === "Admin" ?
+                                        <Link to={"/categories"} className={"btn blueButton text-white"} type="button">
+                                            <FontAwesomeIcon icon={faPenToSquare}/> Manage categories
+                                        </Link>
                                         : <></>}
                                 </div>
                             </div>

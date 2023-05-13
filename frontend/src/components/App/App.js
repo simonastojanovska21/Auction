@@ -8,6 +8,7 @@ import Register from "../Authentication/register";
 import AccountInfo from "../Profile/accountInfo";
 import AddCategory from "../Category/addCategory";
 import UsersAPICall from "../../apiCalls/UsersAPICall";
+import CategoriesList from "../Category/categoriesList";
 
 class App extends Component{
   constructor(props) {
@@ -32,6 +33,8 @@ class App extends Component{
                   <Route path={"/login"} element={<Login />} />
                   <Route path={"/register"} element={<Register />} />
                   <Route path={"/accountInfo"} element={<AccountInfo userRoleOptions={this.state.userRoleOptions} />} />
+
+                  <Route path={"/categories"} element={<CategoriesList /> } />
                   <Route path={"/category/add"} element={<AddCategory />} />
               </Routes>
             </div>
