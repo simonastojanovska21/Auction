@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import {UserDetailsModel} from "../models/UserDetails.js";
 
+
 const router = express.Router();
 
 router.post("/register", async (req,res)=>{
@@ -40,7 +41,7 @@ router.post("/login", async (req,res)=>{
 })
 
 router.post("/editUserDetails",async (req,res)=>{
-    const {username, firstName,lastName,imageUrl, phoneNumber} = req.body;
+    const {username, firstName,lastName,imageUrl, phoneNumber,country,city,address} = req.body;
     const user = await UserModel.findOne({username})
 
     if(!user)
@@ -50,7 +51,8 @@ router.post("/editUserDetails",async (req,res)=>{
     const userDetails = await UserDetailsModel.findOne({username})
     if(!userDetails){
         //if there is no profile information about the user than userDetails document is added in the database
-        const userDetailsModel = new UserDetailsModel({username:username, firstName,lastName,imageUrl,phoneNumber})
+        const userDetailsModel = new UserDetailsModel({username:username, firstName,lastName,imageUrl,phoneNumber,
+        country,city,address})
         await userDetailsModel.save();
         return res.json({message:"User details added successfully"})
     }
@@ -59,6 +61,10 @@ router.post("/editUserDetails",async (req,res)=>{
     await UserDetailsModel.findOneAndUpdate({username}, {lastName:lastName})
     await UserDetailsModel.findOneAndUpdate({username}, {imageUrl:imageUrl})
     await UserDetailsModel.findOneAndUpdate({username}, {phoneNumber:phoneNumber})
+    await UserDetailsModel.findOneAndUpdate({username},{location:{country:country,city:city,address:address}})
+    // await UserDetailsModel.findOneAndUpdate({username}, {country:country})
+    // await UserDetailsModel.findOneAndUpdate({username}, {city:city})
+    // await UserDetailsModel.findOneAndUpdate({username}, {address:address})
     return res.json({message:"User details edited successfully"})
 })
 

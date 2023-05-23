@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import CategoriesAPICall from "../../apiCalls/CategoriesAPICall";
 import {useNavigate} from "react-router-dom";
 
+
 const AddCategory=(props)=>{
 
     const navigate = useNavigate();

@@ -16,6 +16,10 @@ const CategoriesAPICall={
 
     getSubCategoriesForCategory:(categoryId)=>{
         return axios.get(`http://localhost:3001/category/subcategories/${categoryId}`)
+    },
+
+    getAllCategories:()=>{
+        return axios.get('http://localhost:3001/category/all')
     }
 }
 

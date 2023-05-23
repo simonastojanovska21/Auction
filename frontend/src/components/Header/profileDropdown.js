@@ -11,7 +11,7 @@ const ProfileDropdown=(props)=>{
                 Profile
             </Dropdown.Toggle>
             <Dropdown.Menu show={showDropDown}>
-                <Dropdown.Item href={"/"}>
+                <Dropdown.Item href={"/itemsForUser"}>
                     My items
                 </Dropdown.Item>
                 <Dropdown.Item href={"/"}>

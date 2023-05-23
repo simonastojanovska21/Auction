@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 import {userRouter} from './routes/users.js'
 import {categoryRouter} from "./routes/category.js";
+import {itemRouter} from "./routes/item.js"
 const app = express();
 
 app.use(express.json())
@@ -11,6 +12,7 @@ app.use(cors())
 
 app.use("/authentication",userRouter);
 app.use("/category",categoryRouter)
+app.use("/item",itemRouter)
 
 mongoose.connect(
     "mongodb+srv://simonastojanovska1999:5tB4giClOYu3JS2I@auction.vosz7ht.mongodb.net/auction?retryWrites=true&w=majority"

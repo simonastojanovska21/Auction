@@ -22,13 +22,16 @@ const UsersAPICall={
         return axios.get(`http://localhost:3001/authentication/userDetails/${username}`)
     },
 
-    editUserDetails:(username, firstName,lastName,imageUrl, phoneNumber)=>{
+    editUserDetails:(username, firstName,lastName,imageUrl, phoneNumber,country,city,address)=>{
         return axios.post('http://localhost:3001/authentication/editUserDetails',{
             username:username,
             firstName:firstName,
             lastName:lastName,
             imageUrl:imageUrl,
-            phoneNumber:phoneNumber
+            phoneNumber:phoneNumber,
+            country:country,
+            city:city,
+            address:address
         })
     },
 

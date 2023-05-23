@@ -1,14 +1,21 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import UsersAPICall from "../../apiCalls/UsersAPICall";
+import { Country, State }  from 'country-state-city';
 
 const UserDetails=(props)=>{
+    //console.log(props.userDetails)
 
     const[userData,updateUserData]=useState({
         firstName:"",
         lastName:"",
         phoneNumber:"",
-        imageUrl:""
+        imageUrl:"",
+        country:"",
+        city:"",
+        address:""
     })
+    const [countries, setCountries] = useState([])
+    const [citiesInCountry, setCitiesInCountry] = useState([])
 
     const handleChange=(e)=>{
         updateUserData({
@@ -18,16 +25,47 @@ const UserDetails=(props)=>{
     }
 
     const onSaveChanges=async (e)=>{
-        //e.preventDefault();
         const firstName = userData.firstName !== "" ? userData.firstName : props.userDetails.firstName
         const lastName = userData.lastName !== "" ? userData.lastName : props.userDetails.lastName
         const phoneNumber = userData.phoneNumber !== "" ? userData.phoneNumber : props.userDetails.phoneNumber
         const imageUrl = userData.imageUrl !== "" ? userData.imageUrl : props.userDetails.imageUrl
+        //const countryCode = userData.countryCode !== "" ? userData.countryCode : props.userDetails.countryCode
+        const country = userData.country !== "" ? Country.getCountryByCode(userData.country).name : props.userDetails.location.country
+        const city = userData.city !== "" ? userData.city : props.userDetails.location.city
+        const address = userData.address !== "" ? userData.address : props.userDetails.location.address
 
-        await UsersAPICall.editUserDetails(props.userDetails.username, firstName, lastName,imageUrl,phoneNumber);
+        await UsersAPICall.editUserDetails(props.userDetails.username, firstName, lastName,imageUrl,phoneNumber,
+            country,city,address);
         props.setEditUserDetails(false)
-        console.log("edited")
     }
+
+    const getCountries=() => {
+        let countriesList = []
+        Country.getAllCountries().map((item) => {
+            countriesList.push({name: item.name, countryCode:item.isoCode})
+           if(props.userDetails.location.country===item.name){
+               getCitiesInCountry(item.isoCode)
+           }
+        })
+        setCountries(countriesList)
+    }
+
+    const handleCountriesChange = (e)=>{
+        const selectedCountry = e.target.value.trim();
+        getCitiesInCountry(selectedCountry)
+    }
+
+    const getCitiesInCountry=(selectedCountry)=>{
+        let citiesList = []
+        State.getStatesOfCountry(selectedCountry).map((item)=>{
+            citiesList.push(item.name)
+        })
+        setCitiesInCountry(citiesList)
+    }
+
+    useEffect(()=>{
+        getCountries()
+    },[])
 
     return(
         <div className="shadow-lg p-3 mb-5 bg-body-tertiary rounded text-start">
@@ -75,6 +113,46 @@ const UserDetails=(props)=>{
                 <div className="col-8">
                     <input type="text" className="form-control" name={"imageUrl"} onChange={handleChange}
                            placeholder={props.userDetails.imageUrl}
+                           disabled={!props.editUserDetails}/>
+                </div>
+
+                <div className="col-4 text-end fw-bold">
+                    <div className="p-2">Country</div>
+                </div>
+                <div className="col-8">
+                    <select className={"form-select"} name={"country"}
+                            onChange={e=> {handleChange(e); handleCountriesChange(e) }} disabled={!props.editUserDetails}>
+                        {props.userDetails.location.country ? <option>{props.userDetails.location.country}</option> :
+                            <option>Select country</option> }
+                        {countries.map((item)=>{
+                            return(
+                                <option value={item.countryCode}>{item.name}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+
+                <div className="col-4 text-end fw-bold">
+                    <div className="p-2">City</div>
+                </div>
+                <div className="col-8">
+                    <select className={"form-select"} name={"city"} onChange={handleChange} disabled={!props.editUserDetails}>
+                        {props.userDetails.location.city ? <option>{props.userDetails.location.city}</option> :
+                            <option>Select city</option> }
+                        {citiesInCountry.map((item)=>{
+                            return(
+                                <option value={item}>{item}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+
+                <div className="col-4 text-end fw-bold">
+                    <div className="p-2">Address</div>
+                </div>
+                <div className="col-8">
+                    <input type="text" className="form-control" name={"address"} onChange={handleChange}
+                           placeholder={props.userDetails.location.address}
                            disabled={!props.editUserDetails}/>
                 </div>
 

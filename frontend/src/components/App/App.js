@@ -9,6 +9,11 @@ import AccountInfo from "../Profile/accountInfo";
 import AddCategory from "../Category/addCategory";
 import UsersAPICall from "../../apiCalls/UsersAPICall";
 import CategoriesList from "../Category/categoriesList";
+import Test from "./Test";
+import AddNewItem from "../Item/addNewItem";
+import ItemsForUser from "../Item/itemsForUser";
+import EditItem from "../Item/editItem";
+import SetItemForAuction from "../Auction/setItemForAuction";
 
 class App extends Component{
   constructor(props) {
@@ -34,8 +39,14 @@ class App extends Component{
                   <Route path={"/register"} element={<Register />} />
                   <Route path={"/accountInfo"} element={<AccountInfo userRoleOptions={this.state.userRoleOptions} />} />
 
-                  <Route path={"/categories"} element={<CategoriesList /> } />
                   <Route path={"/category/add"} element={<AddCategory />} />
+                  <Route path={"/categories"} element={<CategoriesList /> } />
+
+                  <Route path={"/item/edit/:itemId"} element={<EditItem /> } />
+                  <Route path={"/item/add"} element={<AddNewItem /> } />
+                  <Route path={"/itemsForUser"} element={<ItemsForUser /> } />
+
+                  <Route path={"/auction/setItemForAuction"} element={ <SetItemForAuction  /> } />
               </Routes>
             </div>
           </main>
